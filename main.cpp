@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include "graph.h"
+#include <typeinfo>
 using namespace std;
 
 int calculateMaxPVs(int X){
@@ -24,8 +25,12 @@ int main(){
         getline(cin, input);
         istringstream stream(input);
 
+        if (input.compare("0")){
+            continue;
+        }
+
         while (stream >> CDline){
-            graph.addEdge(i, CDline);
+            graph.addEdge(i, CDline+CD-1);
         }
     }
 
@@ -36,16 +41,19 @@ int main(){
         getline(cin, input);
         istringstream stream(input);
 
+        if (input.compare("0")){
+            continue;
+        }
+
         while (stream >> PVline){
-            graph.addEdge(i, PVline);
+            graph.addEdge(i, PVline+CD-1);
         }
     }
 
     int maxPVs = calculateMaxPVs(X);
-    cout << "MAX PV " <<maxPVs<< "\n";
-    cout << "*\n";
+    cout << "MAX PV " << maxPVs << "\n";
 
-    if (graph.hasCycle())
+    if (graph.hasCycle(CD))
 		cout << "C = 1\n";
     else
 		cout << "C = 0\n";

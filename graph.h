@@ -10,8 +10,8 @@ class graph {
 public:
 	graph(int V);
 	void addEdge(int vertex1, int vertex2);
-    bool DFS(int vertex);
-	bool hasCycle();
+    bool DFS(int vertex, int CD);
+	bool hasCycle(int CD);
 };
 
 graph::graph(int V){
@@ -23,12 +23,12 @@ void graph::addEdge(int vertex1, int vertex2){
 	adj[vertex1].push_back(vertex2);
 }
 
-bool graph::DFS(int vertex){
+bool graph::DFS(int vertex, int CD){
 	stack<int> pilha;
 	bool visitados[V], pilha_rec[V];
 
 	// inicializa visitados e pilha_rec com false
-	for (int i = 0; i < V; i++)
+	for (int i = 1; i <= V; i++)
 		visitados[i] = pilha_rec[i] = false;
 
 	// faz uma DFS
@@ -43,9 +43,10 @@ bool graph::DFS(int vertex){
 
 		for (it = adj[vertex].begin(); it != adj[vertex].end(); it++){
 			// se o vizinho já está na pilha é porque existe ciclo
-			if (pilha_rec[*it])
+			if (pilha_rec[*it]){
 				return true;
-			else if (!visitados[*it]){
+			} else if (!visitados[*it]){
+				cout << (*it) << " ";
 				// se não está na pilha e não foi visitado, indica que achou
 				achou_vizinho = true;
 				break;
@@ -56,19 +57,21 @@ bool graph::DFS(int vertex){
 			pilha_rec[pilha.top()] = false; // marca que saiu da pilha
 			pilha.pop(); // remove da pilha
 
-			if (pilha.empty())
+			if (pilha.empty()){
 				break;
+			}
 			vertex = pilha.top();
-		} else
+		} else {
 			vertex = *it;
+		}
 	}
 
 	return false;
 }
 
-bool graph::hasCycle(){
-	for (int i = 0; i < V; i++){
-		if (DFS(i))
+bool graph::hasCycle(int CD){
+	for (int i = 0; i < CD; i++){
+		if (DFS(i, CD))
 			return true;
 	}
 	return false;
