@@ -28,7 +28,7 @@ bool graph::DFS(int vertex, int CD){
 	bool visitados[V], pilha_rec[V];
 
 	// inicializa visitados e pilha_rec com false
-	for (int i = 1; i <= V; i++)
+	for (int i = 0; i < V; i++)
 		visitados[i] = pilha_rec[i] = false;
 
 	// faz uma DFS
@@ -46,7 +46,6 @@ bool graph::DFS(int vertex, int CD){
 			if (pilha_rec[*it]){
 				return true;
 			} else if (!visitados[*it]){
-				cout << (*it) << " ";
 				// se não está na pilha e não foi visitado, indica que achou
 				achou_vizinho = true;
 				break;
@@ -64,6 +63,12 @@ bool graph::DFS(int vertex, int CD){
 		} else {
 			vertex = *it;
 		}
+	}
+	cout << "teste\n";
+	for (int i = CD; i < V; i++){
+		cout << "teste1\n";
+		if (visitados[i])
+			cout << i+1 << " ";
 	}
 
 	return false;
