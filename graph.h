@@ -55,10 +55,16 @@ bool graph::DFS(int vertex, int CD, int X){
 			cout << vertex << endl;
 		}
 
+		if (cont == R+1){
+			break;
+		}
+		cont++;
+
 		for (it = adj[vertex].begin(); it != adj[vertex].end(); it++){
 			// se o vizinho já está na pilha é porque existe ciclo
 			if (pilha_rec[*it]){
 				cycle = true;
+				break;
 			} else if (!visitados[*it]){
 				// se não está na pilha e não foi visitado, indica que achou
 				achou_vizinho = true;
@@ -78,7 +84,7 @@ bool graph::DFS(int vertex, int CD, int X){
 		}
 	}
 
-
+/*
 	for (int i = CD; i < V; i++){
 		if (visitados[i]){
 			flag = true;
@@ -97,9 +103,11 @@ bool graph::DFS(int vertex, int CD, int X){
 					return false;
 			}
 		}
-	}
-
-	return false;
+		*/
+	if (cycle)
+		return true;
+	else
+		return false;
 }
 
 bool graph::hasCycle(int CD, int X){
